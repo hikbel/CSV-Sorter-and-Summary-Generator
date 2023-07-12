@@ -17,6 +17,11 @@
 
 #include "reading_in_csv.h"
 
+//---------------------------------------------------------------------------
+// Name: loadFile
+// PreCondition:  
+// PostCondition: 
+//---------------------------------------------------------------------------
 void loadFile(vector<int>& vectorOfNums) {
     string fileName = "";
     int counter = 0;
@@ -86,19 +91,19 @@ void sorting(int choice, vector<int>& vectorOfNums) {
 }
 
 void writingToFile(const vector<int>& vectorOfNums) {
-    ofstream txtFile("sorted_data.txt");
+    ofstream csvFile("sorted_data.csv");
 
-    if (txtFile.is_open()) {
+    if (csvFile.is_open()) {
         // Writing each integer to the file
         for (vector<int>::const_iterator it = vectorOfNums.begin(); it != vectorOfNums.end(); ++it) {
-            txtFile << *it;
+            csvFile << *it;
             if (next(it) != vectorOfNums.end()) {
-                txtFile << ", ";
+                csvFile << ", ";
             }
         }
 
         cout << "Numbers written to the file successfully." << endl;
-        txtFile.close();
+        csvFile.close();
     } else {
         cout << "Unable to open the file." << endl;
     }
@@ -221,10 +226,119 @@ void displayInfo(const vector<int>& vectorOfNums) {
     cout << "Range: " << (largest - smallest) << endl;
 }
 
+void writingToTxt(const vector<int>& vectorOfNums) {
+    // Create a new file with the specified name in the current directory
+    ofstream outfile("summary.txt");
+
+    // Check if the file was successfully opened
+    if (outfile.is_open()) {
+        int sumValue = 0;
+        map<int, int> quantityOfEachNum;
+
+        sumValue = sum(vectorOfNums);
+        outfile << endl;
+
+        // Label
+        outfile << "Sorted Values:" << endl;
+
+        for (vector<int>::const_iterator it = vectorOfNums.begin(); it != vectorOfNums.end(); ++it) {
+            outfile << *it;
+            if (next(it) != vectorOfNums.end()) {
+                outfile << ", ";
+            }
+        }
+        outfile << endl << endl;
+
+        // Bar chart
+        outfile << "Bar Chart:" << endl;
+        for (unsigned int i = 0; i < vectorOfNums.size(); i++) {
+            int frequency = count(vectorOfNums.begin(), vectorOfNums.end(), vectorOfNums.at(i));
+            quantityOfEachNum[vectorOfNums.at(i)] = frequency;
+        }
+
+        int maxFrequency = 0;
+        for (map<int, int>::iterator it = quantityOfEachNum.begin(); it != quantityOfEachNum.end(); ++it) {
+            maxFrequency = max(maxFrequency, it->second);
+        }
+
+        for (map<int, int>::iterator it = quantityOfEachNum.begin(); it != quantityOfEachNum.end(); ++it) {
+            outfile << setw(2) << it->first << ": ";
+            for (int j = 0; j < it->second; j++) {
+                outfile << "*";
+            }
+            outfile << endl;
+        }
+        outfile << endl;
+
+        outfile << "Statisics:" << endl;
+        outfile << "Mean: " << double(sumValue) / double(vectorOfNums.size()) << endl;
+        outfile << "Median: " << median(vectorOfNums) << endl;
+
+        vector<int> integersWithMaxFrequency;
+        for (map<int, int>::iterator it = quantityOfEachNum.begin(); it != quantityOfEachNum.end(); ++it) {
+            if (it->second > maxFrequency) {
+                maxFrequency = it->second;
+                integersWithMaxFrequency.clear();
+                integersWithMaxFrequency.push_back(it->first);
+            } else if (it->second == maxFrequency) {
+                integersWithMaxFrequency.push_back(it->first);
+            }
+        }
+
+        // Mode
+        // Check for no mode (if all integers have the same frequency)
+        if (integersWithMaxFrequency.size() == quantityOfEachNum.size()) {
+            outfile << "No Mode (all integers have a common frequency of " << maxFrequency << ")" << endl;
+        } else if (integersWithMaxFrequency.size() == 1) {
+            outfile << "Mode: " << integersWithMaxFrequency.at(0) << " (with a frequency of " << maxFrequency << ")" << endl;
+        } else {
+            outfile << "Modes: ";
+            for (unsigned int i = 0; i < integersWithMaxFrequency.size(); i++) {
+                outfile << integersWithMaxFrequency.at(i);
+                if (i < integersWithMaxFrequency.size() - 1) {
+                    outfile << ", ";
+                }
+            }
+            outfile << " (with a frequency of " << maxFrequency << ")" << endl;
+        }
+        outfile << endl;
+
+
+        // Other info
+        outfile << "Additional Information:" << endl;
+        outfile << "Count: " << vectorOfNums.size() << endl;
+        outfile << "Sum: " << sumValue << endl;
+
+        // Smallest and largest values
+        int smallest = numeric_limits<int>::max(); // Initialize with largest possible value
+        int largest = numeric_limits<int>::min(); // Initialize with smallest possible value
+
+        for (unsigned int i = 0; i < vectorOfNums.size(); i++) {
+            if (vectorOfNums[i] < smallest) {
+                smallest = vectorOfNums[i];
+            }
+            if (vectorOfNums[i] > largest) {
+                largest = vectorOfNums[i];
+            }
+        }
+
+        outfile << "Smallest integer: " << smallest << endl;
+        outfile << "Greatest integer: " << largest << endl;
+        outfile << "Range: " << (largest - smallest) << endl;
+
+        outfile.close();
+    } else {
+        cout << "Invalid - Could not output to an export file." << endl;
+    }
+
+}
+
 int main () {
     vector<int> integers;  // Vector to store integers
     loadFile(integers);
     sorting(howToSort(), integers);
     displayInfo(integers);
+    writingToFile(integers);
+    writingToTxt(integers);
     return 0;
 }
