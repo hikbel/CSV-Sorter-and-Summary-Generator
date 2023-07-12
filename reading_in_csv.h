@@ -8,7 +8,8 @@
 ** constants, function prototypes, and other
 ** generic information.
 **
-**
+** To compile: g++ -Wall reading_in_csv.cpp
+** To run: ./reading_in_csv
 ************************************************/
 
 #include <iostream>
@@ -34,3 +35,4 @@ void sorting(int choice, vector<int>& vectorOfNums);
 double median(const vector<int>& vectorOfNums);
 int sum(const vector<int>& vectorOfNums);
 void displayInfo(const vector<int>& vectorOfNums);
+void writingToTxt(const vector<int>& vectorOfNums);
