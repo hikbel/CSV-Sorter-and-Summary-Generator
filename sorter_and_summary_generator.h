@@ -24,9 +24,8 @@
 using namespace std;
 
 // Constants
-const string EMPTY_STRING = "";
-const char SPACE_CHAR = ' ';
-const int WIDTH = 5;
+const string EMPTY_STRING = ""; // Used when initializing a variable to an empty string
+const int WIDTH = 5; // Set the width for the data visualization to an arbitrary value
 
 // Function Prototypes
 int loadFile(vector<int>& vectorOfNums);
