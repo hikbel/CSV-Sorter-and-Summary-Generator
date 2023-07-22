@@ -96,14 +96,15 @@ int loadFile(vector<int>& vectorOfNums) {
 // PostCondition: Returns 1 or 2 depending on the user's response
 //-----------------------------------------------------------------------------
 int howToSort() {
-    int response = 0; // Store the user's reponse. Initialize it to 0
+    int response = 0; // Used for storing the user's reponse. Initialize it to 0.
+
     do {
         cout << "How would you like to sort the data?" << endl;
         cout << "1. Least to Greatest" << endl;
         cout << "2. Greatest to Least" << endl;
         cin >> response;
 
-        // If the user types in letters or other invalid characters, ignore it
+        // If the user types in letters or other invalid characters, clear their entry
         if (cin.fail()) {
             cin.clear();
             cin.ignore(256, '\n');
