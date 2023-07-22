@@ -29,9 +29,9 @@
 // adds the data to the vector, and returns 1
 //-----------------------------------------------------------------------------
 int loadFile(vector<int>& vectorOfNums) {
-    string fileName = ""; // The file name is empty be default
+    string fileName = EMPTY_STRING; // The file name is empty be default
     int counter = 0; // Initialize the counter at 0
-    string line = ""; // Used when storing the line
+    string line = EMPTY_STRING; // Used when storing the line
     
     // Prompt the user to type in their CSV file name. Provide a test file as a sample
     cout << "Type the name of the file you would like to open: (type 'test' for sample)" << endl;
@@ -51,7 +51,7 @@ int loadFile(vector<int>& vectorOfNums) {
         cout << "Opening " << fileName << endl;
 
         while (getline(loadedFile, line)) {
-            string integer = ""; // Store each integer
+            string integer = EMPTY_STRING; // Store each integer
 
             // For all the integers except for the last
             for (unsigned int i = 0; i < line.size(); i++) {
@@ -64,7 +64,7 @@ int loadFile(vector<int>& vectorOfNums) {
 
                     // Store integer in vector
                     vectorOfNums.push_back(num);  
-                    integer = ""; // Reset integer to empty
+                    integer = EMPTY_STRING; // Reset integer to empty
                     counter++;
                 }
             }
