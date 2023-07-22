@@ -11,9 +11,8 @@
 ** maximum value. It also creates a new CSV file called sorted_data.csv that
 ** contains the sorted integers according to the user’s choice.
 **
-** Use the command g++ -Wall sorter_and_summary_generator.cpp to compile the code.
-**
-** Use ./sorter_and_summary_generator to run the code
+** To compile the code: g++ -Wall sorter_and_summary_generator.cpp
+** To run the code: ./sorter_and_summary_generator
 **
 ******************************************************************************/
 
