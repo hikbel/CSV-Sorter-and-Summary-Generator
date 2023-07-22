@@ -7,8 +7,8 @@
 ** This is the header file, which contains the libraries, namespace, constants,
 ** and function prototypes.
 **
-** To compile: g++ -Wall reading_in_csv.cpp
-** To run: ./reading_in_csv
+** To compile: g++ -Wall sorter_and_summary_generator.cpp
+** To run: ./sorter_and_summary_generator
 **
 ******************************************************************************/
 
